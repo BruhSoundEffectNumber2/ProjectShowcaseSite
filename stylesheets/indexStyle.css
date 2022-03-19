@@ -1,0 +1,8 @@
+.two-links-flex {
+    margin-top: 10%;
+    display: flex;
+    background-color: transparent;
+    justify-content: center;
+    gap: 10%;
+}
+

@@ -15,6 +15,7 @@ p {
     color: aliceblue;
 }
 
+/* Centered flexbox for the main text. */
 .centered-flex {
     display: flex;
     background-color: transparent;

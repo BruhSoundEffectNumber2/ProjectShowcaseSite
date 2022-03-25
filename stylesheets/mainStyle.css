@@ -53,14 +53,15 @@ img {
     margin-right: 25%;
 }
 
+/* Flexbox grid. */
 .flex-grid {
     display: flex;
 }
 
+/* Flexbox grid columns for showcasing projects. */
 .flex-grid .col-showcase {
     flex: 1;
-    margin-left: 30px;
-    margin-right: 30px;
+    margin: 30px;
     position: relative;
     text-align: center;
 }

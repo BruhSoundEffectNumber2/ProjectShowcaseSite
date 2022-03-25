@@ -1,0 +1,18 @@
+/* Overrides the body of mainStyle. */
+body {
+    background-color: rgb(45, 45, 45);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Table of contents. */
+.table-contents {
+    background-color: rgb(30, 30, 30);
+    width: 15%;
+    height: 100vh;
+}
+
+/* The container for all content. */
+.content {
+    width: 85%;
+}

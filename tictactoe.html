@@ -101,13 +101,39 @@
                 a button that the player clicks on to mark it. In a larger
                 project, I would have kept the DisplayManager class around
                 to manage the complexity of a GUI.
-
-                <br><br>
-                Part of the code that runs Swing for Game
-
-                <br><br>
-                Code for Space (in full?)
             </p>
+        </div>
+
+        <div class="code-bg">
+            <pre><code>
+// TODO: Put the creation of the various components into separate functions
+// Create mainFrame to serve as base
+mainFrame = new JFrame("TicTacToe");
+mainFrame.getContentPane().setPreferredSize(
+        new Dimension(
+                SPACE_SIZE * Board.SIZE + LEADERBOARD_WIDTH,
+                SPACE_SIZE * Board.SIZE + INFO_BUTTON_HEIGHT
+        )
+);
+mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+mainFrame.setLayout(new BorderLayout());
+
+// Create gamePanel to hold game panels
+gamePanel = new JPanel();
+gamePanel.setLayout(new BorderLayout());
+gamePanel.setPreferredSize(
+        new Dimension(SPACE_SIZE * Board.SIZE, SPACE_SIZE * Board.SIZE + INFO_BUTTON_HEIGHT)
+);
+mainFrame.add(gamePanel, BorderLayout.LINE_START);
+
+// Create spaceFrame to hold spaces
+spacePanel = new JPanel();
+spacePanel.setPreferredSize(
+        new Dimension(SPACE_SIZE * Board.SIZE, SPACE_SIZE * Board.SIZE)
+);
+spacePanel.setLayout(new GridLayout(3, 3));
+gamePanel.add(spacePanel, BorderLayout.PAGE_START);
+            </code></pre>
         </div>
 
         <div class="centered-flex-half">
@@ -121,7 +147,39 @@
         <div class="centered-flex-half">
             <p>
                 After I finished with Swing, I wanted to do more with the project, 
-                make something unique out of it.
+                make something unique out of it. To that end, I decided that 
+                adding a leaderboard would be a good goal. Implementing a leaderboard
+                presented a number of new requirements, the two biggest being saving
+                a user's score to a text file and displaying a sorted ranking of all
+                users and their score.
+                <br><br>
+                When the game starts, the players are asked for their names. This
+                information is saved in the Player class and is then use to find 
+                any matching names in the leaderboard file, which will then update
+                their score.
+
+                <br><br>
+                Code showing this in action.
+
+                <br><br>
+                When a score is updated, an issue I encountered was changing the 
+                position of the player's score as seen on the screen. Swing is very
+                difficult to work with when it comes to manually setting the position
+                of a component. The way the leaderboard was set up, components were 
+                added in order of the player's score. The parent component automatically
+                showed them in a vertical grid, giving a clean list of values.
+
+                <br><br>
+                Code showing the setup of this vertical grid.
+
+                <br><br>
+                After some thinking, I came to a workable, if somewhat impractical 
+                solution. Just delete all the components and create them all from 
+                scratch again. Ideally this would never be done, as destroying and
+                creating something from scratch is a relatively time-consuming
+                process, but it was easy, clear, and good enough for the project.
+                There is no point in overcomplicating something for the sake of
+                it being more efficient in a different use-case.
             </p>
         </div>
     </div>

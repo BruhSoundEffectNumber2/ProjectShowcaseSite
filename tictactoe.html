@@ -32,11 +32,11 @@
     
         <div class="centered-flex-half">
             <p>
-                This is one of the first complete projects I made with Java for a 
-                computer science course at my high school. This project served as 
-                my first real introduction to more complicated Java development, as
-                well as the use of Swing to create a GUI for the user to interact 
-                with.
+                This project is one of the first complete tasks I made with Java 
+                for a computer science course at my high school. This project 
+                served as my first real introduction to more complicated Java 
+                development. In addition to the use of Swing to create a GUI 
+                for the user to interact with.
             </p>
         </div>
 
@@ -50,16 +50,16 @@
 
         <div class="centered-flex-half">
             <p>
-                The game is simple; Each player enters their name for the leaderboard, then take
+                The game is simple; Each player enters their name for the leaderboard, then takes
                 turn's placing x's or o's on the board until there is a winner or a draw. After
-                the game is over, the leaderboard will be updated and saved to a file. Player's
+                the game is over, the leaderboard will be updated and saved to a file. Players
                 will be able to play again or close the game.
 
                 <br><br>
-                Game asking for names
+                <img alt="asking for names" src="images/content/ttc-names.png">
 
                 <br><br>
-                Game with a winner
+                <img alt="someone won" src="images/content/ttc-won.png">
             </p>
         </div>
 
@@ -73,11 +73,11 @@
 
         <div class="centered-flex-half">
             <p>
-                The first thing I did was the ever-wonderfull process of creating classes.
+                The first thing I did was the ever-wonderful process of creating classes.
                 For a game like TicTacToe, I created Game, Board, Space, Player, and
                 DisplayManager. I wanted to focus on the logic of the game itself. So
-                I decided to make the game work on the command line first. Within
-                about a day of work, the game was playable through the command line.
+                I decided to make the game work on the command line first. With
+                a day of work, the game was playable using the command line.
                 It was time to give my project a fresh coat of paint.
             </p>
         </div>
@@ -92,20 +92,21 @@
 
         <div class="centered-flex-half">
             <p>
-                Swing is a Java library that is designed for created interactive
-                apps. Swing was a major challenge for me, partly because of my
-                inexperience with it, but also because of Swing's limits and design.
+                Swing is a Java library designed for creating interactive apps. 
+                Swing was a challenge for me, partly because of my inexperience 
+                with Swing. But also because of Swing's limits and design.
                 <br><br>
-                For the sake of simplicity, I made the Game class control
-                the hierarchy of Swing components. The Space class is itself
-                a button that the player clicks on to mark it. In a larger
-                project, I would have kept the DisplayManager class around
-                to manage the complexity of a GUI.
+                For simplicity, I made the Game class control the hierarchy of 
+                Swing components. The Space class is a button that the player 
+                clicks on to mark it. In a larger project, I would have kept 
+                the DisplayManager class around to manage the complexity of a GUI.
             </p>
         </div>
 
         <div class="code-bg">
             <pre><code>
+Game.java:
+
 // TODO: Put the creation of the various components into separate functions
 // Create mainFrame to serve as base
 mainFrame = new JFrame("TicTacToe");
@@ -136,6 +137,32 @@ gamePanel.add(spacePanel, BorderLayout.PAGE_START);
             </code></pre>
         </div>
 
+        <br><br>
+
+        <div class="code-bg">
+            <pre><code>
+Space.java:
+
+/** A space that can be taken by a player. */
+public class Space extends JButton {
+    /** What state we are in. (Are we empty or taken by a player?) */
+    public SpaceState state;
+    public int x;
+    public int y;
+
+    public Space(int x, int y) {
+        state = SpaceState.Empty;
+        this.x = x;
+        this.y = y;
+
+        setPreferredSize(new Dimension(Game.SPACE_SIZE, Game.SPACE_SIZE));
+        setRequestFocusEnabled(false);
+        setFont(new Font("Arial", Font.PLAIN, 128));
+    }
+}
+            </code></pre>
+        </div>
+
         <div class="centered-flex-half">
             <p><br></p>
         </div>
@@ -146,43 +173,78 @@ gamePanel.add(spacePanel, BorderLayout.PAGE_START);
 
         <div class="centered-flex-half">
             <p>
-                After I finished with Swing, I wanted to do more with the project, 
-                make something unique out of it. To that end, I decided that 
-                adding a leaderboard would be a good goal. Implementing a leaderboard
-                presented a number of new requirements, the two biggest being saving
-                a user's score to a text file and displaying a sorted ranking of all
-                users and their score.
+                After I finished with Swing, I wanted to do more with the project 
+                and make something unique out of it. To that end, I decided that 
+                adding a leaderboard would be a good goal. Implementing a leaderboard 
+                presented many new requirements, the two largest being saving a user's score 
+                to a text file and displaying a sorted ranking of all users and their scores.
                 <br><br>
-                When the game starts, the players are asked for their names. This
-                information is saved in the Player class and is then use to find 
-                any matching names in the leaderboard file, which will then update
-                their score.
-
-                <br><br>
-                Code showing this in action.
-
-                <br><br>
-                When a score is updated, an issue I encountered was changing the 
-                position of the player's score as seen on the screen. Swing is very
-                difficult to work with when it comes to manually setting the position
-                of a component. The way the leaderboard was set up, components were 
-                added in order of the player's score. The parent component automatically
-                showed them in a vertical grid, giving a clean list of values.
-
-                <br><br>
-                Code showing the setup of this vertical grid.
-
-                <br><br>
-                After some thinking, I came to a workable, if somewhat impractical 
-                solution. Just delete all the components and create them all from 
-                scratch again. Ideally this would never be done, as destroying and
-                creating something from scratch is a relatively time-consuming
-                process, but it was easy, clear, and good enough for the project.
-                There is no point in overcomplicating something for the sake of
-                it being more efficient in a different use-case.
+                When the game starts, the players give their names. This information is saved 
+                in the Player class, then used to find any matching names in the leaderboard 
+                file, which will then update their score.
             </p>
         </div>
-    </div>
+
+        <div class="code-bg">
+            <pre><code>
+Game.java:
+
+private void getPlayerName(Player p) {
+    while (true) {
+        String input = (String)JOptionPane.showInputDialog(
+            mainFrame, 
+            "Player " + p.visualID + ". What is your name? (Max 6 letters)",
+            "Enter Your Name"
+        );
+
+        if (input == null) {
+            System.exit(1);
+        }
+
+        if (input.length() > 0 && input.length() <= 6) {
+            p.name = input;
+            break;
+        }
+    }
+}                        
+            </code></pre>
+        </div>
+
+        <div class="centered-flex-half">
+            <p>
+                When a score is updated, an issue I encountered was changing the position 
+                of the player's score as seen on the screen. Swing is difficult to use when 
+                it comes to manually setting the location of a component. The way the 
+                leaderboard is set up, the components are added in order of the player's score. 
+                The parent component automatically shows them in a vertical grid, giving a clean 
+                list of values.
+            </p>
+        </div>
+
+        <div class="code-bg">
+            <pre><code>
+Leaderboard.java:
+
+// Remove and then re-add the scores to the leaderboard, so it will display correctly
+for (LeaderboardScore score : scores) {
+    remove(score);
+}
+for (LeaderboardScore score : scores) {
+    add(score);
+    score.updateText();
+}
+            </code></pre>
+        </div>
+
+        <div class="centered-flex-half">
+            <p>
+                After some thinking, I came to a workable, if impractical solution. Just delete 
+                all the components and create them all from scratch again. Ideally, this would 
+                never happen, as destroying and creating something from scratch is a relatively 
+                time-consuming process, but it was easy, clear, and good enough for the project. 
+                There is no point in overcomplicating something when it isn't needed.
+            </p>
+        </div>
 </body>
 
 </html>

@@ -14,6 +14,24 @@ body {
     height: 100vh;
 }
 
+.table-contents .grid {
+    display: grid;
+    row-gap: 10px;
+}
+
+.table-contents .item {
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    color: aliceblue;
+    transition-duration: 250ms;
+}
+
+.table-contents .item:hover {
+    color:rgb(30, 30, 30);
+    background-color: aliceblue;
+}
+
 /* The container for all content. */
 .content {
     width: 85%;
